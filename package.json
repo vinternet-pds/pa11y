@@ -1,0 +1,22 @@
+{
+  "name": "pa11y",
+  "version": "1.0.0",
+  "description": "temp desc",
+  "author": "Peter Hunt",
+  "license": "MIT",
+  "homepage": "https://github.com/naseberry/pa11y#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/naseberry/pa11y.git"
+  },
+  "bugs": {
+    "url": "https://github.com/naseberry/pa11y/issues"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "main": "pa11y.js",
+  "devDependencies": {
+    "pa11y": "^4.4.0"
+  }
+}
