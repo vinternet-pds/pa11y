@@ -2,30 +2,37 @@
 // in parallel, with a configurable concurrency.
 'use strict';
 
+
+// Require node modules
 const async         = require('async'),
       fs            = require('fs'),
       pa11y         = require('pa11y'),
       htmlReporter  = require('./node_modules/pa11y/reporter/html'),
       config        = require('./pa11y.config.js');
 
-// Create a test instance with some default options
+
+// Create a Pa11y test runner
 const test = pa11y({
-  standard: config.standard,
-  ignore: config.ignore,
-  log: config.log
+  standard: config.standard, // set test standards
+  ignore: config.ignore, // ignore WCAG msg
+	log: config.log // log what's happening to the console
 });
 
-// Define some URLs to test, and a concurrency
-const filePath = 'file://' + process.cwd();
-const concurrency = config.concurrency; // set the concurrency here to run more tests in parallel
 
-// Use the async library to create a queue. This accepts a
-// function to handle the URLs, and a concurrency.
-// https://github.com/caolan/async
+const concurrency = config.concurrency || 10; // set the concurrency here to run more tests in parallel
+
+
+/*
+  Use the async library to create a queue. This accepts a
+  function to handle the URLs, and a concurrency.
+  https://github.com/caolan/async
+*/
 const queue = async.queue(function(url, done) {
-	// The queue function will be called with each URL. We
-	// can then run the pa11y test function on them and call
-	// `done` when we're finished to free up the queue
+  /*
+  	The queue function will be called with each URL. We
+  	can then run the pa11y test function on them and call
+  	`done` when we're finished to free up the queue
+  */
 	test.run(url, function(error, results) {
 		if (error) {
 			return console.log(error.message);
@@ -42,7 +49,9 @@ queue.drain = function() {
 };
 
 // Lastly, push the URLs we wish to test onto the queue
-queue.push(config.urls);
+queue.push(
+  config.urls
+);
 
 // function to write report to file
 function writeReportToHTML(htmlText, fileName) {

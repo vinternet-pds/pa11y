@@ -17,6 +17,7 @@
   },
   "main": "pa11y.js",
   "devDependencies": {
-    "pa11y": "^4.4.0"
+    "pa11y": "^4.4.0",
+    "readdir": "0.0.13"
   }
 }
